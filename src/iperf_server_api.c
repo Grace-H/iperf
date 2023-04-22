@@ -67,6 +67,8 @@
 #endif /* TCP_CA_NAME_MAX */
 #endif /* HAVE_TCP_CONGESTION */
 
+char *rmx_vla_interface = "wheaton";
+
 int
 iperf_server_listen(struct iperf_test *test)
 {
