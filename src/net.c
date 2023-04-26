@@ -38,7 +38,9 @@
 #include <string.h>
 #include <fcntl.h>
 #include <limits.h>
-#include <rmx_api.h>
+
+#include "/home/ghunter/remicss/rmx_api.h"
+#include "log.h"
 
 #ifdef HAVE_SENDFILE
 #ifdef linux
@@ -204,6 +206,7 @@ create_socket(int domain, int proto, const char *local, const char *bind_dev, in
 	    local_addrs[i].sin_port = htons(31920);
 	    local_addrs_ptrs[i] = (struct sockaddr *) &local_addrs[i];
 	}
+	fprintf(stderr, "about to call rmx_bind in %s\n", __func__);
 
         if (rmx_bind(s, N, local_addrs_ptrs, socklens) < 0) {
 	    saved_errno = errno;
@@ -254,6 +257,7 @@ create_socket(int domain, int proto, const char *local, const char *bind_dev, in
 	    local_addrs_ptrs[i] = (struct sockaddr *) &local_addrs[i];
 	}
 
+	fprintf(stderr, "about to call rmx_bind in %s\n", __func__);
         if (rmx_bind(s, N, local_addrs_ptrs, socklens) < 0) {
 	    saved_errno = errno;
 	    close(s);
@@ -392,6 +396,7 @@ netannounce(int domain, int proto, const char *local, const char *bind_dev, int 
 	local_addrs_ptrs[i] = (struct sockaddr *) &local_addrs[i];
     }
 
+    fprintf(stderr, "about to call rmx_bind in %s\n", __func__);
     if (rmx_bind(s, N, local_addrs_ptrs, socklens) < 0) {
         saved_errno = errno;
         close(s);

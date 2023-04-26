@@ -156,6 +156,9 @@ AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+libiperf_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(libiperf_la_LDFLAGS) $(LDFLAGS) -o $@
 am_iperf3_OBJECTS = iperf3-main.$(OBJEXT)
 iperf3_OBJECTS = $(am_iperf3_OBJECTS)
 iperf3_DEPENDENCIES = libiperf.la
@@ -169,7 +172,7 @@ am__iperf3_profile_SOURCES_DIST = main.c cjson.c cjson.h flowlabel.h \
 	iperf_udp.h iperf_sctp.c iperf_sctp.h iperf_util.c \
 	iperf_util.h iperf_time.c iperf_time.h dscp.c net.c net.h \
 	portable_endian.h queue.h tcp_info.c timer.c timer.h units.c \
-	units.h version.h
+	units.h version.h /home/ghunter/remicss/rmx_api.h
 am__objects_1 = iperf3_profile-cjson.$(OBJEXT) \
 	iperf3_profile-iperf_api.$(OBJEXT) \
 	iperf3_profile-iperf_error.$(OBJEXT) \
@@ -668,15 +671,17 @@ libiperf_la_SOURCES = \
                         timer.h \
                         units.c \
                         units.h \
-                        version.h
+                        version.h \
+			/home/ghunter/remicss/rmx_api.h
 
 libiperf_la_LIBADD = -lrmx_api
+libiperf_la_LDFLAGS = -L/home/ghunter/remicss -Wl,-rpath=/home/ghunter/remicss
 
 # Specify the sources and various flags for the iperf binary
 iperf3_SOURCES = main.c
 iperf3_CFLAGS = -g
 iperf3_LDADD = libiperf.la -lrmx_api
-iperf3_LDFLAGS = -g
+iperf3_LDFLAGS = -g -L/home/ghunter/remicss -Wl,-rpath=/home/ghunter/remicss
 
 # If the iperf-profiled-binary is enabled
 # Specify the sources and various flags for the profiled iperf binary. This
@@ -686,7 +691,7 @@ iperf3_LDFLAGS = -g
 
 @ENABLE_PROFILING_TRUE@iperf3_profile_CFLAGS = -pg -g
 @ENABLE_PROFILING_TRUE@iperf3_profile_LDADD = libiperf.la -lrmx_api
-@ENABLE_PROFILING_TRUE@iperf3_profile_LDFLAGS = -pg -g
+@ENABLE_PROFILING_TRUE@iperf3_profile_LDFLAGS = -pg -g -L/home/ghunter/remicss -Wl,-rpath=/home/ghunter/remicss
 
 # Specify the sources and various flags for the test cases
 t_timer_SOURCES = t_timer.c
@@ -856,7 +861,7 @@ clean-libLTLIBRARIES:
 	}
 
 libiperf.la: $(libiperf_la_OBJECTS) $(libiperf_la_DEPENDENCIES) $(EXTRA_libiperf_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(LINK) -rpath $(libdir) $(libiperf_la_OBJECTS) $(libiperf_la_LIBADD) $(LIBS)
+	$(AM_V_CCLD)$(libiperf_la_LINK) -rpath $(libdir) $(libiperf_la_OBJECTS) $(libiperf_la_LIBADD) $(LIBS)
 
 iperf3$(EXEEXT): $(iperf3_OBJECTS) $(iperf3_DEPENDENCIES) $(EXTRA_iperf3_DEPENDENCIES) 
 	@rm -f iperf3$(EXEEXT)

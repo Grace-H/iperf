@@ -43,14 +43,16 @@ libiperf_la_SOURCES     = \
                         timer.h \
                         units.c \
                         units.h \
-                        version.h
+                        version.h \
+			/home/ghunter/remicss/rmx_api.h
 libiperf_la_LIBADD      = -lrmx_api
+libiperf_la_LDFLAGS  = -L/home/ghunter/remicss -Wl,-rpath=/home/ghunter/remicss
 
 # Specify the sources and various flags for the iperf binary
 iperf3_SOURCES          = main.c
 iperf3_CFLAGS           = -g
 iperf3_LDADD            = libiperf.la -lrmx_api
-iperf3_LDFLAGS          = -g
+iperf3_LDFLAGS          = -g -L/home/ghunter/remicss -Wl,-rpath=/home/ghunter/remicss
 
 if ENABLE_PROFILING
 # If the iperf-profiled-binary is enabled
@@ -61,7 +63,7 @@ iperf3_profile_SOURCES  = main.c \
 
 iperf3_profile_CFLAGS   = -pg -g
 iperf3_profile_LDADD    = libiperf.la -lrmx_api
-iperf3_profile_LDFLAGS  = -pg -g
+iperf3_profile_LDFLAGS  = -pg -g -L/home/ghunter/remicss -Wl,-rpath=/home/ghunter/remicss
 endif
 
 # Specify the sources and various flags for the test cases

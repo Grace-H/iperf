@@ -37,8 +37,8 @@
 #include <sys/time.h>
 #include <sys/select.h>
 #include <limits.h>
-#include <rmx_api.h>
 
+#include "/home/ghunter/remicss/rmx_api.h"
 #include "iperf.h"
 #include "iperf_api.h"
 #include "iperf_tcp.h"

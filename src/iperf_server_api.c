@@ -47,8 +47,8 @@
 #include <sys/resource.h>
 #include <sched.h>
 #include <setjmp.h>
-#include <rmx_api.h>
 
+#include "/home/ghunter/remicss/rmx_api.h"
 #include "iperf.h"
 #include "iperf_api.h"
 #include "iperf_udp.h"
